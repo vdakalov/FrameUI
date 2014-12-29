@@ -10,7 +10,9 @@ class Panel extends Rendering {
     super.render(context);
 
     elements.forEach((element){
-      element.render(context);
+      if (element.style.visible) {
+        element.render(context);
+      }
     });
 
   }

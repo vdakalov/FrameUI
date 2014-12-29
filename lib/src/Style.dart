@@ -14,7 +14,7 @@ class Style {
   List<int> borderRightColor;
   List<int> borderBottomColor;
 
-  List<int> padding = [1, 1, 1, 1];
+  List<int> padding = [4, 4, 4, 4];
 
   int get paddingTop => padding[0];
   void set paddingTop(int size) { padding[0] = size; }
