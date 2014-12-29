@@ -10,10 +10,10 @@ main() {
   FrameUI.Frame main = new FrameUI.Frame(width, height);
   main.mount(document.body);
 
-  FrameUI.Panel controlbar = new FrameUI.Panel();
+  FrameUI.HorizontalPanel controlbar = new FrameUI.HorizontalPanel();
   main.panels.add(controlbar);
 
-  controlbar.area = new Rectangle(0, 0, width, 28);
+  controlbar.area = new Rectangle(0, 0, width, 24);
 
 
   FrameUI.IconButton add = new FrameUI.IconButton(name: "Add");

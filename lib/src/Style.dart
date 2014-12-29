@@ -36,6 +36,11 @@ class Style {
 
   Style() {
 
+    _initAdditional();
+  }
+
+  _initAdditional() {
+
     // BORDERS
 
     borderTopColor = backgroundColor.map((component){
@@ -49,6 +54,6 @@ class Style {
     }).toList();
 
     borderBottomColor = borderRightColor;
-
   }
+
 }

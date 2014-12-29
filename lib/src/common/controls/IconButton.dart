@@ -24,6 +24,8 @@ class IconButton extends Rendering {
     String extension}) {
 
     setIcon(name: this.name, path: path, extension: extension);
+
+    style.padding = [4, 4, 4, 4];
   }
 
   setIcon({String name, String path, String extension}) {
@@ -36,7 +38,8 @@ class IconButton extends Rendering {
 
   render(CanvasRenderingContext2D context) {
     super.render(context);
-    context.drawImage(icon, area.left, area.top);
+    context.drawImage(
+        icon, area.left + style.paddingLeft, area.top + style.paddingTop);
   }
 
 }
