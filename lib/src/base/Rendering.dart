@@ -1,34 +1,83 @@
 part of FrameUI;
 
-class Rendering implements IRendering {
+class Rendering extends IRendering {
 
-  Rectangle area = new Rectangle(0, 0, 0, 0);
-  Style style = new Style();
+  Rectangle _area = new Rectangle(0, 0, 0, 0);
+
+  Rectangle get area =>
+      new Rectangle(
+          _area.left,
+          _area.top,
+          _area.width + (style.paddingLeft + style.paddingRight),
+          _area.height + (style.paddingTop + style.paddingBottom));
+
+  void set area(Rectangle rect) {
+    _area = rect;
+  }
+
+  final Style style = new Style();
 
   render(CanvasRenderingContext2D context) {
+
+    List<int> borderTop = isActive ? style.borderBottomColor : style.borderTopColor,
+              borderLeft = isActive ? style.borderRightColor : style.borderLeftColor,
+              borderRight = isActive ? style.borderLeftColor : style.borderRightColor,
+              borderBottom = isActive ? style.borderTopColor : style.borderBottomColor;
+
     context..beginPath()
            ..fillStyle = "rgb(${style.backgroundColor.join(", ")})"
            ..fillRect(area.left, area.top, area.width, area.height)
            ..fill()
            ..closePath()
 
+           // top border
            ..beginPath()
            ..strokeStyle =
-            "rgb(${style.backgroundColor.map((i){return i+25;}).join(", ")})"
-           ..moveTo(area.left+style.padding+1, area.bottom-style.padding)
-           ..lineTo(area.left+style.padding, area.top+style.padding)
-           ..lineTo(area.right-style.padding, area.top+style.padding)
+              "rgb(${borderTop.join(", ")})"
+           ..moveTo(area.left+style.borderSize, area.top+style.borderSize)
+           ..lineTo(area.right-style.borderSize, area.top+style.borderSize)
            ..stroke()
            ..closePath()
 
+           // left border
            ..beginPath()
            ..strokeStyle =
-              "rgb(${style.backgroundColor.map((i){return i-35;}).join(", ")})"
-           ..moveTo(area.right-style.padding, area.top+style.padding)
-           ..lineTo(area.right-style.padding, area.bottom-style.padding)
-           ..lineTo(area.left+style.padding, area.bottom-style.padding)
+              "rgb(${borderLeft.join(", ")})"
+           ..moveTo(area.left+style.borderSize, area.bottom-style.borderSize)
+           ..lineTo(area.left+style.borderSize, area.top+style.borderSize)
+           ..stroke()
+           ..closePath()
+
+           // right border
+           ..beginPath()
+           ..strokeStyle =
+              "rgb(${borderRight.join(", ")})"
+           ..moveTo(area.right-style.borderSize, area.top+style.borderSize)
+           ..lineTo(area.right-style.borderSize, area.bottom-style.borderSize)
+           ..stroke()
+           ..closePath()
+
+           // bottom border
+           ..beginPath()
+           ..strokeStyle =
+              "rgb(${borderBottom.join(", ")})"
+           ..moveTo(area.right-style.borderSize, area.bottom-style.borderSize)
+           ..lineTo(area.left+style.borderSize, area.bottom-style.borderSize)
            ..stroke()
            ..closePath()
            ;
   }
+
+  onHoverIn(Point point, MouseEvent event) {}
+  onHoverOut(Point point, MouseEvent event) {}
+
+  onAction(Point point, MouseEvent event) {}
+  onMouseMove(Point point, MouseEvent event) {}
+  onMouseUp(Point point, MouseEvent event) {}
+  onMouseDown(Point point, MouseEvent event) {}
+
+  onKeyPress(KeyboardEvent event) {}
+  onKeyDown(KeyboardEvent event) {}
+  onKeyUp(KeyboardEvent event) {}
+
 }

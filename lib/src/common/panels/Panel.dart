@@ -2,7 +2,7 @@ part of FrameUI;
 
 class Panel extends Rendering {
 
-  final List<IRendering> elements = new List<IRendering>();
+  final List<Rendering> elements = new List<Rendering>();
 
   @override
   render(CanvasRenderingContext2D context) {
