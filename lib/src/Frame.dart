@@ -85,14 +85,18 @@ class Frame {
       panel.elements
       .forEach((element){
         if (element.style.visible && element.area.containsPoint(event.offset)) {
+          if (element is ActiveRendering) {
+              element.isActive = _mouseDown;
+          }
           element..isHover = true
-                 ..isActive = _mouseDown
                  ..onHoverIn(event.offset, event)
                  ..onMouseMove(event.offset, event);
           document.body.style.cursor = element.style.cursorName;
         } else if (element.isHover) {
+          if (element is ActiveRendering) {
+            element.isActive = false;
+          }
           element..isHover = false
-                 ..isActive = false
                  ..onHoverOut(event.offset, event);
         }
       });
@@ -104,7 +108,9 @@ class Frame {
     panels.forEach((panel){
       panel.elements.forEach((element){
         if (element.style.visible && element.area.containsPoint(event.offset)) {
-          element.isActive = false;
+          if (element is ActiveRendering) {
+            element.isActive = false;
+          }
           element.onMouseUp(event.offset, event);
         }
       });
@@ -116,9 +122,11 @@ class Frame {
     panels.forEach((panel){
       panel.elements.forEach((element){
         if (element.style.visible && element.area.containsPoint(event.offset)) {
-          element.isActive = true;
+          if (element is ActiveRendering) {
+            element.isActive = true;
+          }
           element.onMouseDown(event.offset, event);
-        } else if (element.isActive) {
+        } else if (element is ActiveRendering && element.isActive) {
           element.isActive = false;
         }
       });

@@ -1,24 +1,18 @@
 part of FrameUI;
 
-class IconButton extends Rendering {
+class IconButton extends ActiveRendering {
 
   String name;
   final ImageElement icon = new ImageElement();
 
   Function action;
 
-  Rectangle _area = new Rectangle(0, 0, 0, 0);
-
   Rectangle get area =>
       new Rectangle(
           _area.left,
           _area.top,
-          icon.width + (style.paddingLeft + style.paddingRight),
-          icon.height + (style.paddingTop + style.paddingBottom));
-
-  void set area(Rectangle rect) {
-    _area = rect;
-  }
+          icon.width + style.paddingHorizontal,
+          icon.height + style.paddingVertical);
 
   IconButton({
     String this.name,
@@ -37,7 +31,9 @@ class IconButton extends Rendering {
   }
 
   render(CanvasRenderingContext2D context) {
+
     super.render(context);
+
     context.drawImage(
         icon,
         area.left + style.paddingLeft + (isActive ? 1 : 0),

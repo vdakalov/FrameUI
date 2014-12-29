@@ -12,6 +12,7 @@ part "src/iface/IRendering.dart";
 
 // base classes
 part "src/base/Rendering.dart";
+part "src/base/ActiveRendering.dart";
 part "src/common/panels/Panel.dart";
 
 // drawing elements
@@ -19,4 +20,5 @@ part "src/common/panels/HorizontalPanel.dart";
 part "src/common/panels/VerticalPanel.dart";
 
 part "src/common/controls/IconButton.dart";
+part "src/common/controls/Scroll.dart";
 

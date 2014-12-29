@@ -28,6 +28,13 @@ class Style {
   int get paddingBottom => padding[2];
   void set paddingBottom(int size) { padding[2] = size; }
 
+  int get paddingHorizontal => paddingLeft + paddingRight;
+
+  int get paddingVertical => paddingTop + paddingBottom;
+
+  int fontSize = 16;
+  String fontFamily = "Verdana";
+
   bool visible = true;
 
   CURSOR cursor = CURSOR.DEFAULT;

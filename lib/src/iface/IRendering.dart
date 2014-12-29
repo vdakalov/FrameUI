@@ -5,7 +5,6 @@ abstract class IRendering {
   Rectangle area;
 
   bool isHover = false;
-  bool isActive = false;
 
   render(CanvasRenderingContext2D context);
 

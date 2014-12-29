@@ -1,27 +1,19 @@
 part of FrameUI;
 
-class Rendering extends IRendering {
+class ActiveRendering extends Rendering {
 
-  Rectangle _area = new Rectangle(0, 0, 0, 0);
-
-  Rectangle get area =>
-      new Rectangle(
-          _area.left,
-          _area.top,
-          _area.width + style.paddingHorizontal,
-          _area.height + style.paddingVertical);
-
-  void set area(Rectangle rect) {
-    _area = new Rectangle(
-        rect.left,
-        rect.top,
-        rect.width - style.paddingHorizontal,
-        rect.height - style.paddingVertical);
-  }
-
-  final Style style = new Style();
+  bool isActive = false;
 
   render(CanvasRenderingContext2D context) {
+
+    List<int> borderTopColor =
+                isActive ? style.borderBottomColor : style.borderTopColor,
+              borderLeftColor =
+                isActive ? style.borderRightColor : style.borderLeftColor,
+              borderRightColor =
+                isActive ? style.borderLeftColor : style.borderRightColor,
+              borderBottomColor =
+                isActive ? style.borderTopColor : style.borderBottomColor;
 
     context..beginPath()
            ..fillStyle = "rgb(${style.backgroundColor.join(", ")})"
@@ -32,7 +24,7 @@ class Rendering extends IRendering {
            // top border
            ..beginPath()
            ..strokeStyle =
-              "rgb(${style.borderTopColor.join(", ")})"
+              "rgb(${borderTopColor.join(", ")})"
            ..moveTo(area.left+style.borderSize, area.top+style.borderSize)
            ..lineTo(area.right-style.borderSize, area.top+style.borderSize)
            ..stroke()
@@ -41,7 +33,7 @@ class Rendering extends IRendering {
            // left border
            ..beginPath()
            ..strokeStyle =
-              "rgb(${style.borderLeftColor.join(", ")})"
+              "rgb(${borderLeftColor.join(", ")})"
            ..moveTo(area.left+style.borderSize, area.bottom-style.borderSize)
            ..lineTo(area.left+style.borderSize, area.top+style.borderSize)
            ..stroke()
@@ -50,7 +42,7 @@ class Rendering extends IRendering {
            // right border
            ..beginPath()
            ..strokeStyle =
-              "rgb(${style.borderRightColor.join(", ")})"
+              "rgb(${borderRightColor.join(", ")})"
            ..moveTo(area.right-style.borderSize, area.top+style.borderSize)
            ..lineTo(area.right-style.borderSize, area.bottom-style.borderSize)
            ..stroke()
@@ -59,24 +51,12 @@ class Rendering extends IRendering {
            // bottom border
            ..beginPath()
            ..strokeStyle =
-              "rgb(${style.borderBottomColor.join(", ")})"
+              "rgb(${borderBottomColor.join(", ")})"
            ..moveTo(area.right-style.borderSize, area.bottom-style.borderSize)
            ..lineTo(area.left+style.borderSize, area.bottom-style.borderSize)
            ..stroke()
            ..closePath()
            ;
   }
-
-  onHoverIn(Point point, MouseEvent event) {}
-  onHoverOut(Point point, MouseEvent event) {}
-
-  onAction(Point point, MouseEvent event) {}
-  onMouseMove(Point point, MouseEvent event) {}
-  onMouseUp(Point point, MouseEvent event) {}
-  onMouseDown(Point point, MouseEvent event) {}
-
-  onKeyPress(KeyboardEvent event) {}
-  onKeyDown(KeyboardEvent event) {}
-  onKeyUp(KeyboardEvent event) {}
 
 }
