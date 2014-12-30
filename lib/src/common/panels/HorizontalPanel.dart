@@ -2,12 +2,6 @@ part of FrameUI;
 
 class HorizontalPanel extends Panel {
 
-  Rectangle _absoluteArea = new Rectangle(0, 0, 0, 0);
-  Rectangle _area = new Rectangle(0, 0, 0, 0);
-
-  Rectangle get absoluteArea => _absoluteArea;
-  Rectangle get area => _area;
-
   singleCalc() {
 
     _absoluteArea = new Rectangle(

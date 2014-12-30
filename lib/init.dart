@@ -25,6 +25,7 @@ part "src/common/panels/TopPanel.dart";
 part "src/common/panels/LeftPanel.dart";
 part "src/common/panels/RightPanel.dart";
 part "src/common/panels/BottomPanel.dart";
+part "src/common/panels/CenterPanel.dart";
 
 part "src/common/controls/IconButton.dart";
 part "src/common/controls/Scroll.dart";
