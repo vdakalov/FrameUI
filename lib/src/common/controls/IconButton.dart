@@ -24,7 +24,7 @@ class IconButton extends ActiveRendering {
 
   setIcon({String name, String path, String extension}) {
 
-    path = path is String ? path : "/resources/icons";
+    path = path is String ? path : "resources/icons";
     extension = extension is String ? extension : "png";
 
     icon.src = "${path}/${name}.${extension}";
