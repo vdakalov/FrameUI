@@ -6,7 +6,7 @@ import "dart:async";
 // helpers
 part "src/Style.dart";
 part "src/Frame.dart";
-part "src/Event.dart";
+part "src/FrameEvent.dart";
 part "src/Root.dart";
 
 // interfaces

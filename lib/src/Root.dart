@@ -18,6 +18,8 @@ class Root extends Rendering {
           frame.area.width,
           frame.area.height);
 
+  List<Rendering> get elements => frame.elements;
+
   render(CanvasRenderingContext2D context) {
 
     frame.elements.forEach((element){

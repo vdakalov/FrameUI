@@ -1,5 +1,6 @@
 
 import "dart:html";
+import "dart:async";
 
 import "package:FrameUI/init.dart" as FrameUI;
 
@@ -20,44 +21,49 @@ main() {
   controlbar.elements.add(add);
   add.style.cursor = FrameUI.CURSOR.POINTER;
 
+  FrameUI.IconButton save =
+      new FrameUI.IconButton(name: "Save", action: (){print("press save");});
+  controlbar.elements.add(save);
+  save.style.cursor = FrameUI.CURSOR.POINTER;
+
   // internal panel
   FrameUI.BottomPanel statusbar = new FrameUI.BottomPanel();
   frame.elements.add(statusbar);
-
-  FrameUI.IconButton save =
-      new FrameUI.IconButton(name: "Save", action: (){print("press save");});
-  statusbar.elements.add(save);
-  save.style.cursor = FrameUI.CURSOR.POINTER;
 
   FrameUI.IconButton chart =
       new FrameUI.IconButton(name: "Chart1", action: (){print("press chart");});
   statusbar.elements.add(chart);
   chart.style.cursor = FrameUI.CURSOR.PROGRESS;
 
-  // RIGHT PANEL
-//  FrameUI.VerticalPanel toolbar = new FrameUI.VerticalPanel();
-//  frame.elements.add(toolbar);
-//  toolbar.area = new Rectangle(
-//      width - 250,
-//      controlbar.area.height,
-//      250,
-//      height - controlbar.area.height);
-//
-//  FrameUI.Scroll models = new FrameUI.Scroll();
-//  toolbar.elements.add(models);
-//
-//  models.area = new Rectangle(
-//      0, 0,
-//      toolbar.area.width - models.style.paddingHorizontal,
-//      300);
-//
-//  models.items.add(new FrameUI.ScrollItem(0, "First model"));
-//  models.items.add(new FrameUI.ScrollItem(0, "Second model"));
-//  models.items.add(new FrameUI.ScrollItem(0, "Other model"));
-//
-//  models.onChange.listen((item){
-//    print("change current model (${item is FrameUI.ScrollItem ? item.title : "null"})");
-//  });
+  // left panel
+  FrameUI.LeftPanel inventary = new FrameUI.LeftPanel();
+  frame.elements.add(inventary);
 
+  FrameUI.IconButton compile =
+      new FrameUI.IconButton(name: "Compile", action:(){print("press compile");});
+  inventary.elements.add(compile);
+
+  FrameUI.IconButton computer =
+      new FrameUI.IconButton(name: "Computer", action:(){print("press computer");});
+  inventary.elements.add(computer);
+
+  // right panel
+  FrameUI.RightPanel extra = new FrameUI.RightPanel();
+  frame.elements.add(extra);
+
+  FrameUI.IconButton folderAdd =
+      new FrameUI.IconButton(name: "Folder-Add", action: (){print("press fAdd");});
+  extra.elements.add(folderAdd);
+
+  FrameUI.IconButton folderDel =
+      new FrameUI.IconButton(name: "Folder-Del", action: (){print("press fDel");});
+  extra.elements.add(folderDel);
+
+
+  new Timer(new Duration(seconds: 4), (){
+    frame.context.canvas.width = 900;
+    frame.context.canvas.height = 800;
+    frame.update();
+  });
 
 }

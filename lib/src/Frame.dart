@@ -15,8 +15,9 @@ class Frame {
 
   bool _mouseDown = false;
 
-  StreamController<Event> _onBeforeRender = new StreamController<Event>();
-  Stream<Event> get onBeforeRender => _onBeforeRender.stream;
+  StreamController<FrameEvent> _onBeforeRender =
+      new StreamController<FrameEvent>();
+  Stream<FrameEvent> get onBeforeRender => _onBeforeRender.stream;
 
   Frame(Rectangle this.area) {
 
@@ -48,7 +49,7 @@ class Frame {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
     // create event
-    _onBeforeRender.add(new Event(this, "onBeforeRender"));
+    _onBeforeRender.add(new FrameEvent(this, "onBeforeRender"));
 
     // rendering
     _root.frame = this;
@@ -85,6 +86,10 @@ class Frame {
                   ;
   }
 
+  update() {
+    area = new Rectangle(0, 0, context.canvas.width, context.canvas.height);
+  }
+
   _onClick(MouseEvent event) {
     elements.forEach((panel){
       panel.elements.forEach((element){
@@ -99,7 +104,6 @@ class Frame {
   _onMouseMove(MouseEvent event) {
     elements.forEach((element){
 
-      // TODO element.area может не быть, потому что еще не установился parent
       if (element.style.visible && element.parent is Rendering &&
           element.absoluteArea.containsPoint(event.offset)) {
         document.body.style.cursor = element.style.cursor;
