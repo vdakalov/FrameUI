@@ -33,6 +33,18 @@ class Scroll extends Rendering {
           element.style.fontSize + style.paddingVertical);
 
       offset += element.area.height;
+
+      if (offset > area.height) {
+        if (parent.area.bottom - parent.style.paddingBottom >
+            area.bottom + element.area.height) {
+          area = new Rectangle(
+              area.left,
+              area.top,
+              area.width,
+              offset + style.paddingVertical);
+        }
+      }
+
     });
 
     super.render(context);

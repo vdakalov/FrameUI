@@ -33,7 +33,9 @@ class VerticalPanel extends Panel {
 
     int offset = 0;
 
-    elements.forEach((element){
+    elements
+    .where((element){ return element.style.visible; })
+    .forEach((element){
       element.area = new Rectangle(
           element.area.left,
           area.top + offset,

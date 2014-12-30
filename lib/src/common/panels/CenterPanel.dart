@@ -18,7 +18,9 @@ class CenterPanel extends Panel {
       right = parent.absoluteArea.right - parent.style.paddingRight;
       bottom = parent.absoluteArea.bottom - parent.style.paddingBottom;
 
-      parent.elements.forEach((element){
+      parent.elements
+      .where((element){ return element.style.visible; })
+      .forEach((element){
         if (element is TopPanel && element.absoluteArea.bottom > top) {
           top = element.absoluteArea.bottom;
         }
