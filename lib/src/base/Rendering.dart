@@ -10,11 +10,7 @@ class Rendering extends IRendering {
 
   Rectangle get area => _area;
   void set area(Rectangle rect) {
-    _area = new Rectangle(
-        rect.left,
-        rect.top,
-        rect.width - style.paddingHorizontal,
-        rect.height - style.paddingVertical);
+    _area = rect;
   }
 
   final Style style = new Style();

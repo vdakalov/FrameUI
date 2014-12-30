@@ -26,8 +26,6 @@ class HorizontalPanel extends Panel {
   @override
   render(CanvasRenderingContext2D context) {
 
-    super.render(context);
-
     int offset = 0;
 
     elements.forEach((element){
@@ -38,8 +36,9 @@ class HorizontalPanel extends Panel {
           element.area.height);
 
       offset += element.area.width + 2;
-      element.render(context);
     });
+
+    super.render(context);
 
   }
 

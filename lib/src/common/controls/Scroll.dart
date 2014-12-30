@@ -2,8 +2,6 @@ part of FrameUI;
 
 class Scroll extends Rendering {
 
-  final List<ScrollItem> items = new List<ScrollItem>();
-
   ScrollItem _selected;
 
   ScrollItem get selected => _selected;
@@ -25,31 +23,29 @@ class Scroll extends Rendering {
 
   render(CanvasRenderingContext2D context) {
 
-    super.render(context);
-
     int offset = 0;
 
-    items.forEach((item){
-      item.area = new Rectangle(
-          area.left + style.paddingLeft,
-          area.top + style.paddingTop + offset,
+    elements.forEach((element){
+      element.area = new Rectangle(
+          element.area.left,
+          offset,
           area.width - style.paddingHorizontal,
-          item.style.fontSize + style.paddingVertical);
+          element.style.fontSize + style.paddingVertical);
 
-      offset += item.area.height;
-      item.render(context);
+      offset += element.area.height;
     });
+
+    super.render(context);
 
   }
 
   onAction(Point point, MouseEvent event) {
-    items.forEach((item){
-      if (selected != item && item.area.containsPoint(point)) {
+    elements.forEach((item){
+      if (selected != item && item.absoluteArea.containsPoint(point)) {
         selected = item;
       }
     });
   }
-
 }
 
 class ScrollItem extends ActiveRendering {
@@ -68,10 +64,10 @@ class ScrollItem extends ActiveRendering {
            ..font = "${style.fontSize}px ${style.fontFamily}"
            ..fillText(
                title,
-               area.left + style.paddingLeft + (isActive ? 1 : 0),
-               area.top + style.paddingTop + (style.fontSize / 2) +
+               absoluteArea.left + style.paddingLeft + (isActive ? 1 : 0),
+               absoluteArea.top + style.paddingTop + (style.fontSize / 2) +
                   (isActive ? 1 : 0))
-               ;
+           ;
 
   }
 

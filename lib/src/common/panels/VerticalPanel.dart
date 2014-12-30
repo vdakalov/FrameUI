@@ -29,13 +29,9 @@ class VerticalPanel extends Panel {
   @override
   render(CanvasRenderingContext2D context) {
 
-    super.render(context);
-
     int offset = 0;
 
-    elements
-    .where((element){ return element.style.visible; })
-    .forEach((element){
+    elements.forEach((element){
       element.area = new Rectangle(
           element.area.left,
           area.top + offset,
@@ -43,9 +39,9 @@ class VerticalPanel extends Panel {
           element.area.height);
 
       offset += element.area.height + 2;
-      element.render(context);
     });
 
+    super.render(context);
   }
 
   int getTopPosition() {

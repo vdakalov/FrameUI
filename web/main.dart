@@ -64,4 +64,20 @@ main() {
       new FrameUI.IconButton(name: "Folder-Del", action: (){print("press fDel");});
   extra.elements.add(folderDel);
 
+  FrameUI.Scroll models = new FrameUI.Scroll();
+  inventary.elements.add(models);
+
+  models.onChange.listen((FrameUI.ScrollItem item){
+    if (item is FrameUI.ScrollItem) {
+      print("Select ${item.title}");
+    } else {
+      print("Unselected");
+    }
+  });
+  models.area = new Rectangle(0, 0, 250, 300);
+
+  models.elements.add(new FrameUI.ScrollItem(1, "First value"));
+  models.elements.add(new FrameUI.ScrollItem(2, "Second value"));
+  models.elements.add(new FrameUI.ScrollItem(3, "Other value"));
+
 }

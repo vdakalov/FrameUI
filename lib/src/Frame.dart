@@ -83,8 +83,8 @@ class Frame {
   }
 
   _onClick(MouseEvent event) {
-    elements.forEach((panel){
-      panel.elements.forEach((element){
+    elements.forEach((element){
+      element.elements.forEach((element){
         if (element.style.visible && element.parent is Rendering &&
             element.absoluteArea.containsPoint(event.offset)) {
           element.onAction(event.offset, event);
