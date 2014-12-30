@@ -19,10 +19,18 @@ class VerticalPanel extends Panel {
               area.width,
               area.height - parent.style.paddingVertical);
 
+    int width = 0;
+
+    elements.forEach((element){
+      if (element.area.width > width) {
+        width = element.area.width;
+      }
+    });
+
     _area = new Rectangle(
         parent.area.left,
         0,
-        32,
+        width + style.paddingHorizontal,
         bottomPosition - topPostion);
   }
 

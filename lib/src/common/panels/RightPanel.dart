@@ -10,10 +10,9 @@ class RightPanel extends VerticalPanel {
 
   singleCalc() {
 
-    int topPosition = getTopPosition(),
-        bottomPosition = getBottomPosition();
+    super.singleCalc();
 
-    _area = new Rectangle(0, 0, 32, bottomPosition - topPosition);
+    int topPosition = getTopPosition();
 
     _absoluteArea = new Rectangle(
         parent.area.right - (area.width + parent.style.paddingRight),

@@ -65,7 +65,7 @@ main() {
   extra.elements.add(folderDel);
 
   FrameUI.Scroll models = new FrameUI.Scroll();
-  inventary.elements.add(models);
+  extra.elements.add(models);
 
   models.onChange.listen((FrameUI.ScrollItem item){
     if (item is FrameUI.ScrollItem) {

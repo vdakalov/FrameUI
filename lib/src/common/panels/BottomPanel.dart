@@ -10,11 +10,13 @@ class BottomPanel extends HorizontalPanel {
 
   singleCalc() {
 
+    super.singleCalc();
+
     _area = new Rectangle(
         parent.area.left,
-        parent.area.bottom - 32,
+        parent.area.bottom - area.height,
         parent.area.width,
-        32);
+        area.height);
 
     _absoluteArea = new Rectangle(
         parent.area.left + parent.style.paddingLeft,

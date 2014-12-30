@@ -16,11 +16,19 @@ class HorizontalPanel extends Panel {
         parent.area.width - parent.style.paddingHorizontal,
         area.height);
 
+    int height = 0;
+
+    elements.forEach((element){
+      if (element.area.height > height) {
+        height = element.area.height;
+      }
+    });
+
     _area = new Rectangle(
         parent.area.left,
         parent.area.top,
         parent.area.width,
-        32);
+        height + style.paddingVertical);
   }
 
   @override
