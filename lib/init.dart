@@ -7,6 +7,7 @@ import "dart:async";
 part "src/Style.dart";
 part "src/Frame.dart";
 part "src/Event.dart";
+part "src/Root.dart";
 
 // interfaces
 part "src/iface/IRendering.dart";
@@ -19,6 +20,10 @@ part "src/common/panels/Panel.dart";
 // drawing elements
 part "src/common/panels/HorizontalPanel.dart";
 part "src/common/panels/VerticalPanel.dart";
+part "src/common/panels/TopPanel.dart";
+part "src/common/panels/LeftPanel.dart";
+part "src/common/panels/RightPanel.dart";
+part "src/common/panels/BottomPanel.dart";
 
 part "src/common/controls/IconButton.dart";
 part "src/common/controls/Scroll.dart";

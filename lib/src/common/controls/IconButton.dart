@@ -34,10 +34,12 @@ class IconButton extends ActiveRendering {
 
     super.render(context);
 
+    int activePadding = isActive ? 1 : 0;
+
     context.drawImage(
         icon,
-        area.left + style.paddingLeft + (isActive ? 1 : 0),
-        area.top + style.paddingTop + (isActive ? 1 : 0));
+        absoluteArea.left + style.paddingLeft + activePadding,
+        absoluteArea.top + style.paddingTop + activePadding);
   }
 
   onAction(Point point, MouseEvent event) {

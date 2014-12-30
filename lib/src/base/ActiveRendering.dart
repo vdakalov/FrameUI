@@ -17,7 +17,11 @@ class ActiveRendering extends Rendering {
 
     context..beginPath()
            ..fillStyle = "rgb(${style.backgroundColor.join(", ")})"
-           ..fillRect(area.left, area.top, area.width, area.height)
+           ..fillRect(
+               absoluteArea.left,
+               absoluteArea.top,
+               absoluteArea.width,
+               absoluteArea.height)
            ..fill()
            ..closePath()
 
@@ -25,8 +29,12 @@ class ActiveRendering extends Rendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${borderTopColor.join(", ")})"
-           ..moveTo(area.left+style.borderSize, area.top+style.borderSize)
-           ..lineTo(area.right-style.borderSize, area.top+style.borderSize)
+           ..moveTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.top + style.borderSize)
+           ..lineTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.top+style.borderSize)
            ..stroke()
            ..closePath()
 
@@ -34,8 +42,12 @@ class ActiveRendering extends Rendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${borderLeftColor.join(", ")})"
-           ..moveTo(area.left+style.borderSize, area.bottom-style.borderSize)
-           ..lineTo(area.left+style.borderSize, area.top+style.borderSize)
+           ..moveTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.bottom-style.borderSize)
+           ..lineTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.top + style.borderSize)
            ..stroke()
            ..closePath()
 
@@ -43,8 +55,12 @@ class ActiveRendering extends Rendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${borderRightColor.join(", ")})"
-           ..moveTo(area.right-style.borderSize, area.top+style.borderSize)
-           ..lineTo(area.right-style.borderSize, area.bottom-style.borderSize)
+           ..moveTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.top + style.borderSize)
+           ..lineTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.bottom - style.borderSize)
            ..stroke()
            ..closePath()
 
@@ -52,8 +68,12 @@ class ActiveRendering extends Rendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${borderBottomColor.join(", ")})"
-           ..moveTo(area.right-style.borderSize, area.bottom-style.borderSize)
-           ..lineTo(area.left+style.borderSize, area.bottom-style.borderSize)
+           ..moveTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.bottom - style.borderSize)
+           ..lineTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.bottom - style.borderSize)
            ..stroke()
            ..closePath()
            ;

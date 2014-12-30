@@ -4,12 +4,19 @@ class Rendering extends IRendering {
 
   Rectangle _area = new Rectangle(0, 0, 0, 0);
 
+  Rectangle get absoluteArea =>
+      new Rectangle(
+          area.left + parent.absoluteArea.left + parent.style.paddingLeft,
+          area.top + parent.absoluteArea.top + parent.style.paddingTop,
+          area.width,
+          area.height);
+
   Rectangle get area =>
       new Rectangle(
           _area.left,
           _area.top,
-          _area.width + style.paddingHorizontal,
-          _area.height + style.paddingVertical);
+          _area.width,
+          _area.height);
 
   void set area(Rectangle rect) {
     _area = new Rectangle(
@@ -21,11 +28,17 @@ class Rendering extends IRendering {
 
   final Style style = new Style();
 
+  List<Rendering> elements = new List<Rendering>();
+
   render(CanvasRenderingContext2D context) {
 
     context..beginPath()
            ..fillStyle = "rgb(${style.backgroundColor.join(", ")})"
-           ..fillRect(area.left, area.top, area.width, area.height)
+           ..fillRect(
+               absoluteArea.left,
+               absoluteArea.top,
+               absoluteArea.width,
+               absoluteArea.height)
            ..fill()
            ..closePath()
 
@@ -33,8 +46,12 @@ class Rendering extends IRendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${style.borderTopColor.join(", ")})"
-           ..moveTo(area.left+style.borderSize, area.top+style.borderSize)
-           ..lineTo(area.right-style.borderSize, area.top+style.borderSize)
+           ..moveTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.top + style.borderSize)
+           ..lineTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.top + style.borderSize)
            ..stroke()
            ..closePath()
 
@@ -42,8 +59,12 @@ class Rendering extends IRendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${style.borderLeftColor.join(", ")})"
-           ..moveTo(area.left+style.borderSize, area.bottom-style.borderSize)
-           ..lineTo(area.left+style.borderSize, area.top+style.borderSize)
+           ..moveTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.bottom - style.borderSize)
+           ..lineTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.top + style.borderSize)
            ..stroke()
            ..closePath()
 
@@ -51,8 +72,12 @@ class Rendering extends IRendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${style.borderRightColor.join(", ")})"
-           ..moveTo(area.right-style.borderSize, area.top+style.borderSize)
-           ..lineTo(area.right-style.borderSize, area.bottom-style.borderSize)
+           ..moveTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.top + style.borderSize)
+           ..lineTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.bottom - style.borderSize)
            ..stroke()
            ..closePath()
 
@@ -60,11 +85,20 @@ class Rendering extends IRendering {
            ..beginPath()
            ..strokeStyle =
               "rgb(${style.borderBottomColor.join(", ")})"
-           ..moveTo(area.right-style.borderSize, area.bottom-style.borderSize)
-           ..lineTo(area.left+style.borderSize, area.bottom-style.borderSize)
+           ..moveTo(
+               absoluteArea.right - style.borderSize,
+               absoluteArea.bottom - style.borderSize)
+           ..lineTo(
+               absoluteArea.left + style.borderSize,
+               absoluteArea.bottom - style.borderSize)
            ..stroke()
            ..closePath()
            ;
+
+    elements.forEach((element){
+      element.parent = this;
+      element.render(context);
+    });
   }
 
   onHoverIn(Point point, MouseEvent event) {}

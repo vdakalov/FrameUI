@@ -2,7 +2,9 @@ part of FrameUI;
 
 abstract class IRendering {
 
+  Rendering parent;
   Rectangle area;
+  List<IRendering> elements;
 
   bool isHover = false;
 

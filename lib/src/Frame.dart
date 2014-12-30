@@ -4,27 +4,31 @@ class Frame {
 
   CanvasRenderingContext2D context;
 
+  Rectangle area;
+
   Duration frequency = null;
   DateTime _lastRender = new DateTime.now();
   double fps = 0.0;
 
-  final List<Panel> panels = new List<Panel>();
+  final Root _root = new Root();
+  final List<Rendering> elements = new List<Rendering>();
 
   bool _mouseDown = false;
 
   StreamController<Event> _onBeforeRender = new StreamController<Event>();
   Stream<Event> get onBeforeRender => _onBeforeRender.stream;
 
-  Frame(int width, int height) {
+  Frame(Rectangle this.area) {
 
-    CanvasElement canvas = new CanvasElement(width: width, height: height);
+    CanvasElement canvas = new CanvasElement(
+        width: area.width, height: area.height);
     context = canvas.getContext("2d");
-
     _init();
   }
 
   Frame.fromContext(CanvasRenderingContext2D context) {
     this.context = context;
+    area = new Rectangle(0, 0, context.canvas.width, context.canvas.height);
     _init();
   }
 
@@ -46,10 +50,11 @@ class Frame {
     // create event
     _onBeforeRender.add(new Event(this, "onBeforeRender"));
 
-    panels.forEach((panel){
-      panel.render(context);
-    });
+    // rendering
+    _root.frame = this;
+    _root.render(context);
 
+    // request new frame
     frequency is Duration ?
         new Timer(frequency, _requestFrame) :
         _requestFrame();
@@ -81,9 +86,10 @@ class Frame {
   }
 
   _onClick(MouseEvent event) {
-    panels.forEach((panel){
+    elements.forEach((panel){
       panel.elements.forEach((element){
-        if (element.style.visible && element.area.containsPoint(event.offset)) {
+        if (element.style.visible && element.parent is Rendering &&
+            element.absoluteArea.containsPoint(event.offset)) {
           element.onAction(event.offset, event);
         }
       });
@@ -91,15 +97,18 @@ class Frame {
   }
 
   _onMouseMove(MouseEvent event) {
-    panels.forEach((panel){
+    elements.forEach((element){
 
-      if (panel.style.visible && panel.area.containsPoint(event.offset)) {
-        document.body.style.cursor = panel.style.cursor;
+      // TODO element.area может не быть, потому что еще не установился parent
+      if (element.style.visible && element.parent is Rendering &&
+          element.absoluteArea.containsPoint(event.offset)) {
+        document.body.style.cursor = element.style.cursor;
       }
 
-      panel.elements
+      element.elements
       .forEach((element){
-        if (element.style.visible && element.area.containsPoint(event.offset)) {
+        if (element.style.visible && element.parent is Rendering &&
+            element.absoluteArea.containsPoint(event.offset)) {
           if (element is ActiveRendering) {
               element.isActive = _mouseDown;
           }
@@ -120,9 +129,10 @@ class Frame {
 
   _onMouseUp(MouseEvent event) {
     _mouseDown = false;
-    panels.forEach((panel){
-      panel.elements.forEach((element){
-        if (element.style.visible && element.area.containsPoint(event.offset)) {
+    elements.forEach((element){
+      element.elements.forEach((element){
+        if (element.style.visible && element.parent is Rendering &&
+            element.absoluteArea.containsPoint(event.offset)) {
           if (element is ActiveRendering) {
             element.isActive = false;
           }
@@ -134,9 +144,10 @@ class Frame {
 
   _onMouseDown(MouseEvent event) {
     _mouseDown = true;
-    panels.forEach((panel){
-      panel.elements.forEach((element){
-        if (element.style.visible && element.area.containsPoint(event.offset)) {
+    elements.forEach((element){
+      element.elements.forEach((element){
+        if (element.style.visible && element.parent is Rendering &&
+            element.absoluteArea.containsPoint(event.offset)) {
           if (element is ActiveRendering) {
             element.isActive = true;
           }
