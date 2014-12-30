@@ -20,18 +20,4 @@ class Root extends Rendering {
 
   List<Rendering> get elements => frame.elements;
 
-  render(CanvasRenderingContext2D context) {
-
-    frame.elements.forEach((element){
-      element.parent = this;
-    });
-
-    super.render(context);
-
-    frame.elements.forEach((element){
-      element.render(context);
-    });
-
-  }
-
 }

@@ -44,7 +44,7 @@ class Frame {
 
   _render(var some) {
 
-    _updateFps();
+//    _updateFps();
 
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 

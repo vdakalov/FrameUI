@@ -3,21 +3,12 @@ part of FrameUI;
 class Rendering extends IRendering {
 
   Rectangle _area = new Rectangle(0, 0, 0, 0);
+  Rectangle _absoluteArea = new Rectangle(0, 0, 0, 0);
 
-  Rectangle get absoluteArea =>
-      new Rectangle(
-          area.left + parent.absoluteArea.left + parent.style.paddingLeft,
-          area.top + parent.absoluteArea.top + parent.style.paddingTop,
-          area.width,
-          area.height);
+  Rectangle get absoluteArea => _absoluteArea;
+  void set absoluteArea(Rectangle rect) { _absoluteArea = rect; }
 
-  Rectangle get area =>
-      new Rectangle(
-          _area.left,
-          _area.top,
-          _area.width,
-          _area.height);
-
+  Rectangle get area => _area;
   void set area(Rectangle rect) {
     _area = new Rectangle(
         rect.left,
@@ -29,6 +20,14 @@ class Rendering extends IRendering {
   final Style style = new Style();
 
   List<Rendering> elements = new List<Rendering>();
+
+  singleCalc() {
+    _absoluteArea = new Rectangle(
+        area.left + parent.absoluteArea.left + parent.style.paddingLeft,
+        area.top + parent.absoluteArea.top + parent.style.paddingTop,
+        area.width,
+        area.height);
+  }
 
   render(CanvasRenderingContext2D context) {
 
@@ -95,8 +94,11 @@ class Rendering extends IRendering {
            ..closePath()
            ;
 
-    elements.forEach((element){
+    elements
+    .where((element){ return element.style.visible; })
+    .forEach((element){
       element.parent = this;
+      element.singleCalc();
       element.render(context);
     });
   }

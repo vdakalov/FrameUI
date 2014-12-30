@@ -3,10 +3,13 @@ part of FrameUI;
 abstract class IRendering {
 
   Rendering parent;
+  Rectangle absoluteArea;
   Rectangle area;
   List<IRendering> elements;
 
   bool isHover = false;
+
+  singleCalc();
 
   render(CanvasRenderingContext2D context);
 

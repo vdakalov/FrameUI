@@ -59,10 +59,9 @@ main() {
       new FrameUI.IconButton(name: "Folder-Del", action: (){print("press fDel");});
   extra.elements.add(folderDel);
 
-
   new Timer(new Duration(seconds: 4), (){
     frame.context.canvas.width = 900;
-    frame.context.canvas.height = 800;
+    frame.context.canvas.height = 200;
     frame.update();
   });
 
