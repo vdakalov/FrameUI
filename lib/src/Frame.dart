@@ -34,19 +34,13 @@ class Frame {
   }
 
   _init() {
+    _frames.add(this);
     _binds();
-    _requestFrame();
   }
 
-  _requestFrame() {
-    window.requestAnimationFrame(_render);
-  }
+  _render() {
 
-  _render(var some) {
-
-//    _updateFps();
-
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.clearRect(area.left, area.top, area.width, area.height);
 
     // create event
     _onBeforeRender.add(new FrameEvent(this, "onBeforeRender"));
@@ -55,10 +49,8 @@ class Frame {
     _root.frame = this;
     _root.render(context);
 
-    // request new frame
-    frequency is Duration ?
-        new Timer(frequency, _requestFrame) :
-        _requestFrame();
+    _updateFps();
+
   }
 
   _updateFps() {

@@ -1,6 +1,5 @@
 
 import "dart:html";
-import "dart:async";
 
 import "package:FrameUI/init.dart" as FrameUI;
 
@@ -8,13 +7,19 @@ main() {
 
   int width = 800, height = 600;
 
-  FrameUI.Frame frame = new FrameUI.Frame(
+  FrameUI.start();
+
+  FrameUI.Frame frame1 = new FrameUI.Frame(
       new Rectangle(0, 0, width, height));
-  frame.mount(document.body);
+  frame1.mount(document.body);
+  frame1.area = new Rectangle(0, 0, 400, 600);
+
+  FrameUI.Frame frame2 = new FrameUI.Frame.fromContext(frame1.context);
+  frame2.area = new Rectangle(400, 0, 400, 600);
 
   // TOP PANEL
   FrameUI.TopPanel controlbar = new FrameUI.TopPanel();
-  frame.elements.add(controlbar);
+  frame1.elements.add(controlbar);
 
   FrameUI.IconButton add =
       new FrameUI.IconButton(name: "Add", action: (){print("press add");});
@@ -28,7 +33,7 @@ main() {
 
   // internal panel
   FrameUI.BottomPanel statusbar = new FrameUI.BottomPanel();
-  frame.elements.add(statusbar);
+  frame1.elements.add(statusbar);
 
   FrameUI.IconButton chart =
       new FrameUI.IconButton(name: "Chart1", action: (){print("press chart");});
@@ -37,7 +42,7 @@ main() {
 
   // left panel
   FrameUI.LeftPanel inventary = new FrameUI.LeftPanel();
-  frame.elements.add(inventary);
+  frame2.elements.add(inventary);
 
   FrameUI.IconButton compile =
       new FrameUI.IconButton(name: "Compile", action:(){print("press compile");});
@@ -49,7 +54,7 @@ main() {
 
   // right panel
   FrameUI.RightPanel extra = new FrameUI.RightPanel();
-  frame.elements.add(extra);
+  frame2.elements.add(extra);
 
   FrameUI.IconButton folderAdd =
       new FrameUI.IconButton(name: "Folder-Add", action: (){print("press fAdd");});
@@ -58,11 +63,5 @@ main() {
   FrameUI.IconButton folderDel =
       new FrameUI.IconButton(name: "Folder-Del", action: (){print("press fDel");});
   extra.elements.add(folderDel);
-
-  new Timer(new Duration(seconds: 4), (){
-    frame.context.canvas.width = 900;
-    frame.context.canvas.height = 200;
-    frame.update();
-  });
 
 }

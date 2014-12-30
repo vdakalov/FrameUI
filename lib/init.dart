@@ -4,6 +4,7 @@ import "dart:html";
 import "dart:async";
 
 // helpers
+part "src/FrameManager.dart";
 part "src/Style.dart";
 part "src/Frame.dart";
 part "src/FrameEvent.dart";
