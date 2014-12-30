@@ -1,8 +1,16 @@
 part of FrameUI;
 
-enum CURSOR {
-  DEFAULT, CROSSHAIR, HELP, MOVE, POINTER, PROGRESS, TEXT, WAIT
+class CURSOR {
+  static final String DEFAULT = "default";
+  static final String CROSSHAIR = "crosshair";
+  static final String HELP = "help";
+  static final String MOVE = "move";
+  static final String POINTER = "pointer";
+  static final String PROGRESS = "progress";
+  static final String TEXT = "text";
+  static final String WAIT = "wait";
 }
+
 
 class Style {
 
@@ -37,9 +45,7 @@ class Style {
 
   bool visible = true;
 
-  CURSOR cursor = CURSOR.DEFAULT;
-  String get cursorName =>
-      cursor.toString().replaceFirst("CURSOR.", "").toLowerCase();
+  String cursor = CURSOR.DEFAULT;
 
   Style() {
 

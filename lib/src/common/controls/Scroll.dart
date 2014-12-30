@@ -44,7 +44,7 @@ class Scroll extends Rendering {
 
   onAction(Point point, MouseEvent event) {
     items.forEach((item){
-      if (item.area.containsPoint(point)) {
+      if (selected != item && item.area.containsPoint(point)) {
         selected = item;
       }
     });

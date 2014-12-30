@@ -5,10 +5,15 @@ class Frame {
   CanvasRenderingContext2D context;
 
   Duration frequency = null;
+  DateTime _lastRender = new DateTime.now();
+  double fps = 0.0;
 
   final List<Panel> panels = new List<Panel>();
 
   bool _mouseDown = false;
+
+  StreamController<Event> _onBeforeRender = new StreamController<Event>();
+  Stream<Event> get onBeforeRender => _onBeforeRender.stream;
 
   Frame(int width, int height) {
 
@@ -34,7 +39,12 @@ class Frame {
 
   _render(var some) {
 
+    _updateFps();
+
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+    // create event
+    _onBeforeRender.add(new Event(this, "onBeforeRender"));
 
     panels.forEach((panel){
       panel.render(context);
@@ -45,12 +55,17 @@ class Frame {
         _requestFrame();
   }
 
+  _updateFps() {
+    DateTime nowRender = new DateTime.now();
+    fps = double.parse((1000 / nowRender.difference(_lastRender).inMilliseconds).toStringAsFixed(2));
+    _lastRender = nowRender;
+  }
+
   mount(HtmlElement parent) {
     parent.append(context.canvas);
     context.canvas..tabIndex = 1
                   ..focus()
                   ;
-
   }
 
   _binds() {
@@ -79,7 +94,7 @@ class Frame {
     panels.forEach((panel){
 
       if (panel.style.visible && panel.area.containsPoint(event.offset)) {
-        document.body.style.cursor = panel.style.cursorName;
+        document.body.style.cursor = panel.style.cursor;
       }
 
       panel.elements
@@ -91,7 +106,7 @@ class Frame {
           element..isHover = true
                  ..onHoverIn(event.offset, event)
                  ..onMouseMove(event.offset, event);
-          document.body.style.cursor = element.style.cursorName;
+          document.body.style.cursor = element.style.cursor;
         } else if (element.isHover) {
           if (element is ActiveRendering) {
             element.isActive = false;
