@@ -1,5 +1,9 @@
 name: FrameUI
 version: 0.0.1
+author: Viktor Dakalov <atlantidu@gmail.com>
 description: Оконный мереджер. Полностью реализован на canvas, без использования hmtl и css
+homepage: http://www.vihtor.ru
+environment:
+  sdk: 1.8.3
 dev_dependencies:
   unittest: any
